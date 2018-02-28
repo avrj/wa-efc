@@ -7,7 +7,9 @@
   },
   "rules": {
     "semi": ["error", "always"],
-    "comma-dangle": ["error", "always-multiline"]
+    "comma-dangle": ["error", "always-multiline"],
+    "max-len": ["error", { "code": 110 }],
+    "no-shadow": "off"
   },
   "globals": {
     "fetch": false,
