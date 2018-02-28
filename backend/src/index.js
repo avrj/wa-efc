@@ -24,7 +24,7 @@ const coordsOrFallbackParams = (lat, lon) => isValidCoords(lat, lon) ? getCoords
 const fetchWeather = async (lat, lon) => {
   const queryParams = coordsOrFallbackParams(lat, lon);
 
-  const endpoint = `${mapURI}/weather?${queryParams}&appid=${appId}`;
+  const endpoint = `${mapURI}/forecast?${queryParams}&appid=${appId}`;
 
   const response = await fetch(endpoint);
 
