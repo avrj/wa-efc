@@ -51,9 +51,13 @@ class Weather extends React.Component {
   render() {
     const { weather } = this.state;
 
-    const renderImage = (dateText, { icon, description }) => icon && <div key={generate()} className="icon">{format(addHours(parse(dateText), 2), 'DD.MM HH:mm')} <img src={`/img/${icon.slice(0, -1)}.svg`} alt={description} /></div>;
+    const utcStrToReadable = utcStr => format(addHours(parse(utcStr), 2), 'DD.MM HH:mm');
 
-    const renderWeatherBlock = ({ weather, dt_txt }) => (weather && weather.length > 0) && renderImage(dt_txt, weather[0]);
+    const renderImage = (dateText, { icon, description }) => icon && (<div key={generate()} className="icon">
+      {utcStrToReadable(dateText)} <img src={`/img/${icon.slice(0, -1)}.svg`} alt={description} />
+    </div>);
+
+    const renderWeatherBlock = ({ dt_txt, weather }) => renderImage(dt_txt, weather[0]);
 
     return (
       <div>
