@@ -2,6 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import { format, parse, addHours } from 'date-fns';
 import { generate } from 'shortid';
+import { number } from 'prop-types';
 
 const baseURL = process.env.ENDPOINT;
 
