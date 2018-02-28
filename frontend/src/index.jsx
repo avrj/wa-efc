@@ -5,9 +5,25 @@ import { generate } from 'shortid';
 
 const baseURL = process.env.ENDPOINT;
 
-const getWeatherFromApi = async () => {
+const getPositionAsPromise = () => new Promise((res, rej) => {
+  global.navigator.geolocation.getCurrentPosition(res, rej);
+});
+
+
+const getPosition = async () => {
   try {
-    const response = await fetch(`${baseURL}/weather`);
+    const response = await getPositionAsPromise();
+    return response.coords;
+  } catch (error) {
+    console.error(error);
+  }
+
+  return { };
+};
+
+const getWeatherFromApi = async (lat, lon) => {
+  try {
+    const response = await fetch(`${baseURL}/weather?lat=${lat}&lon=${lon}`);
     return response.json();
   } catch (error) {
     console.error(error);
@@ -26,8 +42,10 @@ class Weather extends React.Component {
   }
 
   async componentWillMount() {
-    const weather = await getWeatherFromApi();
-    this.setState({ icon: weather.icon.slice(0, -1) });
+    const { latitude, longitude } = await getPosition();
+
+    const weather = await getWeatherFromApi(latitude, longitude);
+    this.setState({ weather });
   }
 
   render() {
