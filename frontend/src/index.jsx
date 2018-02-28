@@ -32,6 +32,10 @@ const getWeatherFromApi = async (lat, lon) => {
   return {};
 };
 
+const utcOffset = 2;
+
+const utcStrToReadable = utcStr => format(addHours(parse(utcStr), utcOffset), 'DD.MM HH:mm');
+
 class Weather extends React.Component {
   constructor(props) {
     super(props);
@@ -45,13 +49,12 @@ class Weather extends React.Component {
     const { latitude, longitude } = await getPosition();
 
     const weather = await getWeatherFromApi(latitude, longitude);
+
     this.setState({ weather });
   }
 
   render() {
     const { weather } = this.state;
-
-    const utcStrToReadable = utcStr => format(addHours(parse(utcStr), 2), 'DD.MM HH:mm');
 
     const renderImage = (dateText, { icon, description }) => icon && (<div key={generate()} className="icon">
       {utcStrToReadable(dateText)} <img src={`/img/${icon.slice(0, -1)}.svg`} alt={description} />
