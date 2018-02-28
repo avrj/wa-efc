@@ -63,10 +63,10 @@ class Weather extends React.Component {
     const renderWeatherBlock = ({ dt_txt, weather }) => renderImage(dt_txt, weather[0]);
 
     return (
-      <div>
-        { weather && weather.city.name }
-        { weather && weather.list.slice(0, 2).map(weatherData => renderWeatherBlock(weatherData)) }
-      </div>
+      weather ? <div>
+        { weather.city.name }
+        { weather.list.slice(0, 2).map(weatherData => renderWeatherBlock(weatherData)) }
+      </div> : <div>Loading weather data...</div>
     );
   }
 }
