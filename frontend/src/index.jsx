@@ -56,6 +56,7 @@ class Weather extends React.Component {
 
   render() {
     const { weather } = this.state;
+    const { forecastCount } = this.props;
 
     const renderImage = (dateText, { icon, description }) => icon && (<div key={generate()} className="icon">
       {utcStrToReadable(dateText)} <img src={`/img/${icon.slice(0, -1)}.svg`} alt={description} />
@@ -64,15 +65,23 @@ class Weather extends React.Component {
     const renderWeatherBlock = ({ dt_txt, weather }) => renderImage(dt_txt, weather[0]);
 
     return (
-      weather ? <div>
-        { weather.city.name }
-        { weather.list.slice(0, 2).map(weatherData => renderWeatherBlock(weatherData)) }
-      </div> : <div>Loading weather data...</div>
+weather ? <div>
+  { weather.city.name }
+  { weather.list.slice(0, forecastCount).map(weatherData => renderWeatherBlock(weatherData)) }
+</div> : <div>Loading weather data...</div>
     );
   }
 }
 
+Weather.propTypes = {
+  forecastCount: number,
+};
+
+Weather.defaultProps = {
+  forecastCount: 2,
+};
+
 ReactDOM.render(
-  <Weather />,
-  document.getElementById('app')
+  <Weather forecastCount={2} />,
+document.getElementById('app')
 );
