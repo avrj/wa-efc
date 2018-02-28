@@ -13,6 +13,7 @@
     "lint": "node_modules/.bin/eslint --ext .js --ext .jsx ."
   },
   "dependencies": {
+    "date-fns": "^1.29.0",
     "react": "^15.4.2",
     "react-dom": "^15.4.2"
   },
