@@ -37,7 +37,7 @@ class Weather extends React.Component {
     super(props);
 
     this.state = {
-      icon: '',
+      weather: null,
     };
   }
 
@@ -49,11 +49,16 @@ class Weather extends React.Component {
   }
 
   render() {
-    const { icon } = this.state;
+    const { weather } = this.state;
+
+    const renderImage = (dateText, { icon, description }) => icon && <div key={generate()} className="icon">{format(addHours(parse(dateText), 2), 'DD.MM HH:mm')} <img src={`/img/${icon.slice(0, -1)}.svg`} alt={description} /></div>;
+
+    const renderWeatherBlock = ({ weather, dt_txt }) => (weather && weather.length > 0) && renderImage(dt_txt, weather[0]);
 
     return (
-      <div className="icon">
-        { icon && <img src={`/img/${icon}.svg`} alt="Current weather" /> }
+      <div>
+        { weather && weather.city.name }
+        { weather && weather.list.slice(0, 2).map(weatherData => renderWeatherBlock(weatherData)) }
       </div>
     );
   }
